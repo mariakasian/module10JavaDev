@@ -10,7 +10,7 @@ INSERT INTO client (cname) VALUES
 ('Tom Cruise'),
 ('Brad Pitt');
 
-INSERT INTO planet (planet_id, pname) VALUES
+INSERT INTO planet (id, pname) VALUES
 ('MER039', 'Mercury'),
 ('VEN072', 'Venus'),
 ('EAR100', 'Earth'),
