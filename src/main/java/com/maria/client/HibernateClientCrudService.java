@@ -21,16 +21,14 @@ public class HibernateClientCrudService {
 
     public static Client getById(long id) throws InvalidIdException {
         idValidation(id);
+
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
-            NativeQuery<Client> query = session.createNativeQuery(
-                    "SELECT cname FROM client WHERE id = :clientId",
-                    Client.class
-            );
+            Transaction transaction = session.beginTransaction();
 
-            query.setParameter("clientId", id);
-            return query.stream().findFirst().orElse(null);
+            Client client = session.get(Client.class, id);
 
-//            return session.get(Client.class, id);
+            transaction.commit();
+            return client;
         }
     }
 
@@ -46,7 +44,7 @@ public class HibernateClientCrudService {
             query.setParameter("clientName", name);
             query.setParameter("clientId", id);
 
-            session.persist(query);
+            query.executeUpdate();
             transaction.commit();
         }
     }
@@ -61,7 +59,7 @@ public class HibernateClientCrudService {
             );
             query.setParameter("clientId", id);
 
-            session.persist(query);
+            query.executeUpdate();
             transaction.commit();
         }
     }
@@ -69,11 +67,6 @@ public class HibernateClientCrudService {
     public static List<Client> getAll() {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             return session.createNativeQuery("SELECT id, cname FROM client", Client.class).list();
-
-            /*NativeQuery<Client> query = session.createNativeQuery(
-                    "SELECT client_id, cname FROM client",
-                    Client.class
-            );*/
         }
     }
 
@@ -105,11 +98,13 @@ public class HibernateClientCrudService {
     public static void clear() {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
+
             NativeQuery<Client> query = session.createNativeQuery(
                     "DELETE FROM client",
                     Client.class
             );
-            session.persist(query);
+
+            query.executeUpdate();
             transaction.commit();
         }
     }

@@ -16,7 +16,6 @@ public class HibernateUtils {
                 .addAnnotatedClass(Client.class)
                 .buildSessionFactory();
 
-
         flywayMigration(PropertyReader.getConnectionUrl());
     }
 
