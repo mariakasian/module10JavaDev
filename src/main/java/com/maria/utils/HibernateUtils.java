@@ -1,6 +1,7 @@
-package com.maria.hibernate;
+package com.maria.utils;
 
 import com.maria.client.Client;
+import com.maria.planet.Planet;
 import org.flywaydb.core.Flyway;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -14,6 +15,7 @@ public class HibernateUtils {
     private HibernateUtils() {
         this.sessionFactory = new Configuration()
                 .addAnnotatedClass(Client.class)
+                .addAnnotatedClass(Planet.class)
                 .buildSessionFactory();
 
         flywayMigration(PropertyReader.getConnectionUrl());

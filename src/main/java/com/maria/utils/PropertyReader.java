@@ -1,4 +1,4 @@
-package com.maria.hibernate;
+package com.maria.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -7,7 +7,7 @@ ALTER TABLE client
     ADD CONSTRAINT cname_values CHECK (LENGTH(cname) >= 3 AND LENGTH(cname) <= 200);
 
 CREATE TABLE IF NOT EXISTS planet (
-    id VARCHAR(500) PRIMARY KEY,
+    id VARCHAR(10) PRIMARY KEY,
     pname VARCHAR(500) NOT NULL
 );
 
